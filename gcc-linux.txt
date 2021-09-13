@@ -1,0 +1,90 @@
+GCC Compilation Flow
+-This is the typical flow of a .c file
+-Pre-Processor: removing comments, including header files, replacing macros
+-Compiler: generating intermediate representation (IR) code or assembly code
+	This is what creates the assembly code
+-Assembler: Generating obj code (machine lang/binary code)
+	This is the object file .o
+-Linker: Linking multiple obj codes together, linking fxn calls w/ definitions in static/
+dynamic libs, generating
+executable progs
+	This produces the executable file that we will use to run the project
+
+Generating Intermediate Files
+-Pre-processor: gcc -E hello_world_example.c > hello_world_example.i -included .h files
+(expanded) w/ main @ EOF
+	This will show all the C code that comes along with our import files. Our code that
+	we have written won't show until we reach the EOF
+-Compiler: gcc -S hello_world_example.c hellow_world_example.s -assembly code
+	This will translate our original code into assembly instr
+-Assembler: gcc -c hello_world_example.c hello_world_example.o -binary code (non-human
+readable)
+	This will make a bunch of 1s & 0s
+-Linker: gcc hello_world_example.c -o hello_world_example -executable code (w/o -o flag
+a.out will be generated)
+	This generates our exec prog
+-Run/Exec: ./hello_world_example
+
+Useful GCC Flags
+-Wall: enables all warnings
+-Wextra: enables some extra warning flags that are not enabled by Wall
+-Werror: make all warnings into errors
+-0(-01,-02,..): controls various sorts & levels of compiler optimizations
+-g/-ggdb: Produces debugging info in the OS' native frmt for use by GDB
+-save-temps: Stores the usual temp intermediate files permanently in cwd (curr wrking dir)
+w/ naming based on src file
+
+OS Processes - Sample Code
+Process Sys calls & APIs / Lib Fxns
+-pid_t fork(void)
+	Here we have a parent, which will be split to a parent & child. The child will hit 
+	exec() to run a process. While this is happening the parent is using wait() to wait
+	for the child process to exit()
+-pid_t wait(int *statloc)
+	When called in parent, waits for any of the child processes to term to fetch its
+	term status, returns pid of child OR returns w/ an err if no child exists
+-pid_t getpid(void)
+	Returns pid of calling process
+-pid_t getppid(void)
+	Returns pid of the calling process' parent
+-int execve(const char *pathname, char *const argv[], char *const envp[]) 
+	Execs a prog, usually called by child, doesn't return on success
+-void exit(int status)
+	Causes normal process termination w/ status being return to parent
+-pid_t vfork(void)
+	A var of fork where the child execs 1st until either exec or exit is called & the
+	parent blocks til then
+-pid_t waitpid(pid_t pid, int *statloc, int options)
+	A variation of wait which gives more ctrl on which child to wait for, & provides an
+	option of not blocking in parent
+
+Makefile
+-A makefile acts as an input to the linux make cmd which essentially makes compilation of
+lrg progs having multiple files easier & more straightfwd
+-Writing a makefile is a 1 time effort as opposed to manually running all the individual
+compilation steps in their correct order to successfully recompile a lrg prog every time
+-The make utility is smart enough to determine which files don't need to be recompiled
+bc they haven't been modified since make was last run to create the executable
+
+Basic Linux CL
+-echo: print args to stdout
+-wc: print new line, word, byte, line count for a file
+-grep, locate, find: search patterns in a file, search for files
+-tee: read from stdin & write to stdout & provided files
+-redirection(>,>>), pipe(|)-overwrite output to file, append output to file, chain multiple
+cmds
+-less, more: file perusal cmds
+-ps, top: list curr processes
+-sort: sort lines of txt files
+-mkdir, rmdir, rm, mv, cp, ls, pwd, cd: file & dir operations
+-cat: concat files & print to stdout
+-touch: change file timestamps
+-head, tail: output the first/last parts of files
+-diff: compare contents of 2 files line by line
+-chmod, chown: change file mode bits, change file owner & group
+-kill: send a signal to a process (SIGTERM(15) or SIGKILL(9))
+-ping: check connectivity status to a server
+-wget: dwnld files from internet
+-history: list previously run cmds
+-tar, zip, unzip: archive multiple files, compress & uncompress files
+

@@ -1,0 +1,56 @@
+What is GDB?
+-GNU Debugger
+	It takes an executable as its input
+-Powerful debugging tool for C, C++ and other langs
+-Helps developer to track bugs
+-Allows us to inspect what the program is doing at a certain point during exec
+-Errs w/ segfault invalid ptr maybe easier to track with gdb
+
+Setting up environment
+-GDB works w/ program files
+-gcc [flags] <source files> -o <output file> <- basic format
+-gcc -g <source files> -o <output file>
+
+Passing Executable to gdb
+-gdb <- w/o param
+-gdb file_name [arg list] EG gdb file hello.o 1 2 3
+-(gdb) file file_name <- suppy a file w/in interactive session
+-(gdb) run [arg list] <- runs prog supplied before
+
+Breakpoints
+-Program exec halts @ specific breakpoints
+-Allows us to inspect prog @ specific regions from a breakpoint position
+-Setting breakpoints
+	break line_no
+	break function_name
+-Removing breakpoints
+	delete breakpoint_no
+-If we want to exec the immediate next statement we use the next keyword
+-For multiple breakpoints, using continue keyword we can jump to consequtive breakpoints 
+(everything in between gets execed)
+-More helpful keywords: enable, disable break_no
+
+Monitoring data
+-There are 2 ways to keep track of a particular var: using watch or display keyword
+-Watch keyword: watch variable_name EG watch x. Whenever the val of x changes during exec
+watch notifies us
+
+Monitoring data
+-Display keyword: to print the val of var x after each statement is execed display x
+-To disable displaying a specific var: undisplay display_no_associated_with_var 
+	To see lsit of displays we can do info display
+
+Program Call Stack: backtrace
+-As a program performs a fxn call info regarding where it was called from & what args were
+passed to it is saved in a block called stack frame or frame for short
+	This can overflow
+-A backtrace is a summary of how a program got to where it is
+	backtrace/where <- prints the call stack up to curr fxn call
+	up <- one step up the call stack
+	down <- one step down the call stack
+
+Misc Helpful Keywords
+-shell clear (clear gdb shell cmds)
+-list line_no (shows src code centered @ line_no position)
+-list + (shows more code below curr line)
+-list - (shows more code above)

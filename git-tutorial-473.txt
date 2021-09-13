@@ -1,0 +1,15 @@
+What is Git?
+-Version Ctrl
+-Super useful for working w/ multiple engineers & tracking changes when code goes bad
+
+There are 4 main Stages of Git: Working directory, staging area, local repo, & git remote repo
+-The working dir, staging area, & local repo are all stored on the local computer
+-The git remote repo is stored on github/gitlab/bitbucket etc
+-The working directory is the location of a current project. When we want git to start tracking this location we 
+use "git add ." to include these files for tracking via git. When we want get to create a check point where we can
+go back to this exact point we do "git commit -m". This attaches all the changes that have been made at this time
+to a specific version ID. When we want this published we then do a "git push" where it is now accessible to the
+cloud.
+
+Adding SSH Key: Review video
+
